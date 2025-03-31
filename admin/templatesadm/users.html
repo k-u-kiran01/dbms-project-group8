@@ -1,0 +1,62 @@
+{% extends "adminbase.html" %}
+{% block title %}Dealer List{% endblock %}
+
+{% block role %}{{role}}{%endblock%}
+{% block maincontent %}
+    <div class="main-content">
+        <h1>Manage Users</h1>
+
+        <form id="searchUsers">
+            <h3>Search by UserID</h3>
+            <input type="text" id="searchuserName" placeholder="Enter User Id" name='search_id' required />
+            <button id="searchUser" type="submit">Search</button>
+        </form>
+
+        <button class="add-user-btn" onclick="toggleUserForm()">Add User</button>
+        
+        <form id="addUserForm" class="hidden">
+            <h3>Add User</h3>
+            <input type="text" placeholder="Enter User Name" required />
+            <input type="text" placeholder="Enter User Role" required />
+            <input type="password" placeholder="Enter User Password" required />
+            <button type="submit">Add User</button>
+        </form>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User Name</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="userTable">
+                {% for user in users %}
+                <tr>
+                    <td>{{user['User_ID']}}</td>
+                    <td>{{user['Name']}}</td>
+                    <td>{{user['Role']}}</td>
+                    <td>
+                    <form action="{{ url_for('admin.remove_user') }}" method="POST">
+                        <input type="hidden" name="user_id" value="{{ user['User_ID'] }}">
+                        <button type="submit" class="remove-btn">REMOVE</button>
+                    </form>
+                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function toggleUserForm() {
+            var form = document.getElementById("addUserForm");
+            if (form.classList.contains("hidden")) {
+                form.classList.remove("hidden");
+            } else {
+                form.classList.add("hidden");
+            }
+        }
+    </script>
+{%endblock%}

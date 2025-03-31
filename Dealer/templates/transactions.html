@@ -1,0 +1,35 @@
+{% extends "dealerbase.html" %}
+{%block title%}Transactions{%endblock%}
+{% block role %}{{role}}{%endblock%}
+{% block content %}
+<div class="content">
+    <h2>Transaction hitory</h2>
+    <form method="GET" action="{{url_for('dealer.transactions')}}">
+        <label for="search_id">Search by Procurement ID:</label>
+        <input type="text" id="search_id" name="search_id">
+        <button type="submit">Search</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Procurement ID</th>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{transaction['Procurement_ID']}}</td>
+                <td>{{transaction['Transaction_ID']}}</td>
+                <td>{{transaction['Amount']}}</td>
+                <td>{{transaction['Status']}}</td>
+                <td>{{transaction['Transaction_Date']}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

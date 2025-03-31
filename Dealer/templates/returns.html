@@ -1,0 +1,57 @@
+{% extends "dealerbase.html" %}
+{%block title%}Your Returns{%endblock%}
+{% block role %}{{role}}{%endblock%}
+{% block content %}
+<div class="content">
+    <h2>Procurement hitory</h2>
+    <form method="GET" action="{{url_for('dealer.getReturns')}}">
+        <label for="search_id">Search by return ID:</label>
+        <input type="text" id="search_id" name="search_id">
+        <button type="submit">Search</button>
+    </form>
+    <button class="new-return-btn" onclick="togglenewreturn()">NEW RETURN</button>
+    <form id="newreturnForm" class="hidden" method="POST" action="{{ url_for('dealer.addReturn') }}">
+        <h3>Apply Return</h3>
+        <select name="delivery_id" id="return-grain">
+            {% for delivery in deliveries %}
+            <option value="{{delivery['Delivery_ID']}}">{{delivery['Grain_Type']}} Quantity:{{delivery['Grain_Quantity']}} </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Return ID</th>
+                <th>Delivery_ID</th>
+                <th>Grain</th>
+                <th>Quantity</th>
+                <th>Return_Date</th>
+                <th>Return Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for return in returns %}
+            <tr>
+                <td>{{return['Return_ID']}}</td>
+                <td>{{return['Delivery_ID']}}</td>
+                <td>{{return['Grain_ID']}}</td>
+                <td>{{return['Grain_Quantity']}}</td>
+                <td>{{return['Return_Date']}}</td>
+                <td>{{return['Return_Status']}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    function togglenewreturn() {
+        var form = document.getElementById("newreturnForm");
+        if (form.classList.contains("hidden")) {
+            form.classList.remove("hidden");
+        } else {
+            form.classList.add("hidden");
+        }
+    }
+</script>
+{% endblock %}

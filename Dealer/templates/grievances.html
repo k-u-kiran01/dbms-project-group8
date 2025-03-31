@@ -1,0 +1,67 @@
+{% extends "dealerbase.html" %}
+
+{% block title %}Grievance{% endblock %}
+
+{% block role %}{{ role }}{% endblock %}
+
+{% block content %}
+<div class="content">
+    <h2>Grievance Details</h2>
+
+    <!-- Search Form -->
+    <form method="GET" action="{{ url_for('dealer.grievanceSection') }}">
+        <label for="search_id">Search by Grievance ID:</label>
+        <input type="text" id="search_id" name="search_id">
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Add Grievance Button -->
+    <button class="add-grievance-btn" onclick="toggleGrievanceForm()">ADD</button>
+
+    <!-- Hidden Add Grievance Form -->
+    <form id="addgrievanceForm" class="hidden" method="POST" action="{{ url_for('dealer.addGrievance') }}">
+        <h3>Add Grievance</h3>
+        <input type="text" name="description" placeholder="Enter Description" required />
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Grievance Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Grievance ID</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for grievance in grievances %}
+                <tr>
+                    <td>{{ grievance['Grievance_ID'] }}</td>
+                    <td>{{ grievance['Description'] }}</td>
+                    <td>{{ grievance['Status'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- JavaScript -->
+<script>
+    function toggleGrievanceForm() {
+        var form = document.getElementById("addgrievanceForm");
+        if (form.classList.contains("hidden")) {
+            form.classList.remove("hidden");
+        } else {
+            form.classList.add("hidden");
+        }
+    }
+</script>
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+{% endblock %}

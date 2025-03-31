@@ -1,0 +1,17 @@
+{% extends "adminbase.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block role %}{{role}}{%endblock%}
+{% block maincontent %}
+    <div class="main-content">
+        <h1>Welcome to Admin Dashboard</h1>
+        <div class="stats">
+            <div id ="pcard" class="card" >Procurements Last Month: {{plm}}</div>
+            <div id ="dcard" class="card">Deliveries Last Month: {{dlm}}</div>
+        </div>
+        <div class="stats">
+            <div id ="acard" class="card">Active Users: {{au}}</div>
+            <div id ="pgcard" class="card">Pending Grievances: {{pg}}</div>
+        </div>
+    </div>
+{% endblock %}

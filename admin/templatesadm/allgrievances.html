@@ -1,0 +1,50 @@
+{% extends "adminbase.html" %}
+{% block title %}Grievances{% endblock %}
+{% block role %}{{role}}{%endblock%}
+{% block maincontent %}
+    <div class="main-content">
+        <h1>Grievance Details</h1>
+
+        <!-- Search Bar -->
+        <form id = "searchUsers" method="GET" action="{{ url_for('admin.allgrievances') }}">
+            <h3>Search by Grievance ID</h3>
+            <input type="text"  placeholder="Enter Grievance ID" name='search_id' required />
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Grievances Table -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Grievance ID</th>
+                    <th>Dealer ID</th>
+                    <th>Issue</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grievance in grievances %}
+                <tr>
+                    <td>{{grievance['Grievance_ID']}}</td>
+                    <td>{{grievance['Dealer_ID']}}</td>
+                    <td>{{grievance['Discription']}}</td>
+                    <td>{{grievance['Date']}}</td>
+                    <td>{{grievance['Status']}}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin.edit_grievance_status', grievance_id=grievance['Grievance_ID']) }}">
+                            <input type="text" name="new_status" placeholder="New Status" required>
+                            <button type="submit">Update</button>
+                        </form>
+                    </td>
+                </tr> 
+                {%endfor %}
+            </tbody>
+            <!-- Dynamic Table Rows -->
+            <tbody id="grievanceTable"></tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

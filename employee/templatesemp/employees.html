@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Employees{% endblock %}
+{% block role %}{{role}}{% endblock %}
+{% block content %}
+    <div class="content">
+        <h2>Employee Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Role</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee['Manager_ID'] }}</td>
+                        <td>{{ employee['Manager_Name'] }}</td>
+                        <td>{{ 'Manager' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

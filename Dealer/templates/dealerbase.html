@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title%}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('dealer.static', filename='style.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <h3>Dashboard ({% block role %}Guest{% endblock %})</h3>
+        <a href="{{ url_for('dealer.dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('dealer.procurementSection') }}">Procurements</a>
+        <a href="{{ url_for('dealer.transactions') }}">Transactions</a>
+        <a href="{{ url_for('dealer.getOrders') }}">Your Orders</a>
+        <a href="{{ url_for('dealer.getReturns') }}">Your Returns</a>
+        <a href="{{ url_for('dealer.grievanceSection') }}">Grievance</a>
+        <a href="{{ url_for('dealer.logout') }}">Logout</a>
+    </div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

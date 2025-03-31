@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block role %}{{role}}{% endblock %}
+{% block content %}
+    <div class="content">
+        <h1>Data Analytics Dashboard</h1>
+       
+        <div class="summary">
+            <div class="card">
+                <h3>Stock Summary</h3>
+                <p>Total Stock: {{ total_stock }} </p>
+                <p>Total Capacity: {{ total_capacity }}</p>
+            </div>
+            <div class="card">
+                <h3>Pending Grievances</h3>
+                <p>Pending: {{ pending_grievances }}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

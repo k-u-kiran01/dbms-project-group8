@@ -1,0 +1,69 @@
+{% extends "adminbase.html" %}
+{% block title %}Dealer List{% endblock %}
+
+{% block role %}{{role}}{% endblock %}
+{% block maincontent %}
+    <div class="main-content">
+        <h1>Warehouse Stock Details</h1>
+        
+        <!-- Search Bar -->
+        <form id="searchUsers" method="GET" action="{{url_for('admin.allwarehouses')}}">
+            <h3>Search by Warehouse ID</h3>
+            <input type="text" placeholder="Enter Warehouse ID" name="select_id" required />
+            <button type="submit">Search</button>
+        </form>
+
+        {% if select_id %}
+        <!-- Warehouses Table -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Inventory ID</th>
+                    <th>Warehouse ID</th>
+                    <th>Grain Type</th>
+                    <th>Capacity (in Tons)</th>
+                    <th>Available Stock (in Tons)</th>
+                </tr>
+            </thead>
+
+            <!-- Dynamic Table Rows -->
+            <tbody id="warehouseTable">
+                {% for inventory in inventories %}
+                <tr>
+                    <td>{{ inventory['Inventory_ID'] }}</td>
+                    <td>{{ inventory['Warehouse_ID'] }}</td>
+                    <td>{{ inventory['Grain_Type'] }}</td>
+                    <td>{{ inventory['Capacity'] }}</td>
+                    <td>{{ inventory['Stock'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        {% else %}
+        <!-- All Warehouses Table -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Warehouse ID</th>
+                    <th>Location</th>
+                    <th>Capacity (in Tons)</th>
+                    <th>Available Stock (in Tons)</th>
+                </tr>
+            </thead>
+
+            <!-- Dynamic Table Rows -->
+            <tbody id="warehouseTable">
+                {% for warehouse in warehouses %}
+                <tr>
+                    <td>{{ warehouse['Warehouse_ID'] }}</td>
+                    <td>{{ warehouse['Location'] }}</td>
+                    <td>{{ warehouse['Total_Capacity'] }}</td>
+                    <td>{{ warehouse['Total_Stock'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+{% endblock %}

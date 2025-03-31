@@ -1,0 +1,64 @@
+{% extends "dealerbase.html" %}
+{%block title%}Your Orders{%endblock%}
+{% block role %}{{role}}{%endblock%}
+{% block content %}
+<div class="content">
+    <h2>Your Orders</h2>
+    <form method="GET" action="{{url_for('dealer.getOrders')}}">
+        <label for="search_id">Search by Delivery ID:</label>
+        <input type="text" id="search_id" name="search_id">
+        <button type="submit">Search</button>
+    </form>
+    <button class="new-order-btn" onclick="toggleneworder()">NEW ORDER</button>
+
+    <form id="neworderForm" class="hidden" method="POST" action="{{ url_for('dealer.addOrder') }}">
+        <h3>New Order</h3>
+        <select name="grain_id" id="order-grain">
+            {% for item in items %}
+            <option value="{{item['Grain_ID']}}">{{item['Grain_Type']}}</option>
+            {% endfor %}
+        </select>
+        <input type="number" name="quantity" placeholder="Quantity" min="1" oninput="validateQuantity(this)" required />
+        <select name="selwarehouse" id="order-warehouse">
+            {% for warehouse in warehouses %}
+            <option value="{{warehouse['Warehouse_ID']}}">{{warehouse['Location']}}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit">Submit</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Delivery ID</th>
+                <th>Grain</th>
+                <th>Quantity</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{order['Delivery_ID']}}</td>
+                <td>{{order['Grain_Type']}}</td>
+                <td>{{order['Grain_Quantity']}}</td>
+                <td>{{order['Delivery_Date']}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+    function toggleneworder() {
+    var form = document.getElementById("neworderForm");
+    form.classList.toggle("hidden");
+    form.classList.toggle("visible");
+}
+
+function validateQuantity(input) {
+    if (input.value < 1) {
+        input.value = 1;
+    }
+}
+</script>
+{% endblock %}

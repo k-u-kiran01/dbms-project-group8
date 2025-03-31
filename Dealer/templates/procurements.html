@@ -1,0 +1,35 @@
+{% extends "dealerbase.html" %}
+{%block title%}Your Procurements{%endblock%}
+{% block role %}{{role}}{%endblock%}
+{% block content %}
+<div class="content">
+    <h2>Procurement hitory</h2>
+    <form method="GET" action="{{url_for('dealer.procurementSection')}}">
+        <label for="search_id">Search by Procurement ID:</label>
+        <input type="text" id="search_id" name="search_id">
+        <button type="submit">Search</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Procurement ID</th>
+                <th>Grain</th>
+                <th>Quantity</th>
+                <th>Transaction Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for procurement in procurements %}
+            <tr>
+                <td>{{procurement['P_ID']}}</td>
+                <td>{{procurement['Grain_Type']}}</td>
+                <td>{{procurement['Grain_Quantity']}}</td>
+                <td>{{procurement['Price']}}</td>
+                <td>{{procurement['Date']}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

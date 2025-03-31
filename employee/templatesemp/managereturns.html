@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Procurement{% endblock %}
+{% block role %}{{role}}{% endblock %}
+{% block content %}
+    <div class="content">
+        <h2>Return Requests</h2>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Return ID</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Processed By</th>
+                    <th>Return Date</th>
+                    <th>Customer Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for return_item in returns %}
+                    <tr>
+                        <td>{{ return_item['Return_ID'] }}</td>
+                        <td>{{ return_item['Product'] }}</td>
+                        <td>{{ return_item['Quantity'] }}</td>
+                        <td>{{ return_item['Status'] }}</td>
+                        <td>{{ return_item['Processed_By'] if return_item['Processed_By'] else 'N/A' }}</td>
+                        <td>{{ return_item['Return_Date'] if return_item['Return_Date'] else 'N/A' }}</td>
+                        <td>{{ return_item['Customer_Name'] if return_item['Customer_Name'] else 'Unknown' }}</td>
+                        <td>
+                            {% if return_item['Status'] == 'Pending' %}
+                                <form method="POST" action="{{ url_for('employee.manage_returns') }}">
+                                    <input type="hidden" name="return_id" value="{{ return_item['Return_ID'] }}">
+                                    <button type="submit" name="action" value="accept">Accept</button>
+                                    <button type="submit" name="action" value="reject">Reject</button>
+                                </form>
+                            {% else %}
+                                Processed
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">No return requests found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

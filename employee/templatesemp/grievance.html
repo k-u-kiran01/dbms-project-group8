@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Grievance{% endblock %}
+{% block role %}{{role}}{% endblock %}
+{% block content %}
+    <div class="content">
+        <h2>Grievance Details</h2>
+        <form method="GET" action="{{ url_for('employee.grievance') }}">
+            <label for="search_id">Search by Grievance ID:</label>
+            <input type="text" id="search_id" name="search_id">
+            <button type="submit">Search</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Grievance ID</th>
+                    <th>Dealer ID</th>
+                    <th>Issue</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for grievance in grievances %}
+                    <tr>
+                        <td>{{ grievance['Grievance_ID'] }}</td>
+                        <td>{{ grievance['Dealer_ID'] }}</td>
+                        <td>{{ grievance['Description'] }}</td>
+                        <td>{{ grievance['Status'] }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('employee.edit_grievance_status', grievance_id=grievance['Grievance_ID']) }}">
+                                <input type="text" name="new_status" placeholder="New Status" required>
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

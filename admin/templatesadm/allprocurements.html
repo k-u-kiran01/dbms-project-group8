@@ -1,0 +1,52 @@
+{% extends "adminbase.html" %}
+{% block title %}Procurements{% endblock %}
+
+{% block role %}{{role}}{%endblock%}
+{% block maincontent %}
+    <div class="main-content">
+        <h1>Procurement List</h1>
+        <form id = "searchprocurement">
+            <h3>Search by Procurement ID</h3>
+            <input type="text" placeholder="Enter Procurement ID" name="search_id" required />
+            <button type="submit">Search</button>
+        </form>
+        <form id="selectWarehouse" method="GET" >
+            <select name="select_id" id="warehouse-selection" onchange="this.form.submit()">
+                <option value="" disabled selected>Select a Warehouse</option>
+                {% for warehouse in warehouses %}
+                <option value="{{ warehouse['Warehouse_ID'] }}">{{ warehouse['Location'] }}</option>
+                {% endfor %}
+            </select>            
+        </form>
+        
+        
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Procurement ID</th>
+                    <th>Grain</th>
+                    <th>Quantity</th>
+                    <th>Dealer ID</th>
+                    <th>Price</th>
+                    <th>Date</th>
+                    <th>Warehouse ID</th>
+                    <th>Inventory ID</th>
+                </tr>
+            </thead>
+            <tbody id="procurementTable">
+                {% for procurement in procurements %}
+                <tr>
+                <td>{{procurement['P_ID']}}</td>
+                <td>{{procurement['Grain_Type']}}</td>
+                <td>{{procurement['Grain_Quantity']}}</td>
+                <td>{{procurement['Dealer_ID']}}</td>
+                <td>{{procurement['Price']}}</td>
+                <td>{{procurement['Date']}}</td>
+                <td>{{procurement['Warehouse_ID']}}</td>
+                <td>{{procurement['Inventory_ID']}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

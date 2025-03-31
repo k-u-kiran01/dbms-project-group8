@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Procurement{% endblock %}
+{% block role %}{{role}}{% endblock %}
+{% block content %}
+    <div class="content">
+        <h2>Procurement Details</h2>
+        <form method="GET" action="{{ url_for('employee.procurement') }}">
+            <label for="search_id">Search by Procurement ID:</label>
+            <input type="text" id="search_id" name="search_id" class="input-field">
+            <button class="btn">Search</button>
+        </form>
+
+        <button class="btn primary" id="toggle-form-btn" onclick="toggleForm()">Add New Procurement</button>
+        <div id="procurement-form" class="form-container" style="display: none;">
+            <h3>Add Procurement</h3>
+            <form method="POST" class="procurement-form">
+                <!-- Grain Selection -->
+                <div class="form-group">
+                    <label>Grain Type</label>
+                    <select name="grain_id" id="grain-select" required class="dropdown">
+                        <option value="">Select Grain</option>
+                        {% for grain in grains %}
+                            <option value="{{ grain.Grain_ID }}" data-price="{{ grain.Price_Per_Unit }}">
+                                {{ grain.Grain_Type }} (₹{{ grain.Price_Per_Unit }}/unit)
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Quantity Input -->
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" id="quantity" min="1" required class="input-field">
+                </div>
+                
+
+                <!-- Dealer Search -->
+                <div class="form-group">
+                    <label>Dealer Selection</label>
+                    <div class="search-container">
+                        <input type="number" id="dealer-id" placeholder="Enter Dealer ID" class="input-field">
+                        <button type="button" onclick="searchDealer()" class="btn">Search</button>
+                    </div>
+                    <div id="dealer-results"></div>
+                    <input type="hidden" name="dealer_id" id="selected-dealer-id">
+                    <div id="selected-dealer" class="selected-item-info"></div>
+                </div>
+
+                <button type="submit" class="btn primary">Submit Procurement</button>
+            </form>
+        </div>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Procurement ID</th>
+                    <th>Grain ID</th>
+                    <th>Quantity</th>
+                    <th>Price (₹)</th>
+                    <th>Dealer ID</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for procurement in procurements %}
+                    <tr>
+                        <td>{{ procurement['P_ID'] }}</td>
+                        <td>{{ procurement['Grain_ID'] }}</td>
+                        <td>{{ procurement['Grain_Quantity'] }}</td>
+                        <td>{{ procurement['Price'] }}</td>
+                        <td>{{ procurement['Dealer_ID'] }}</td>
+                        <td>{{ procurement['Date'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const form = document.getElementById('procurement-form');
+            const button = document.getElementById('toggle-form-btn');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            button.textContent = form.style.display === 'block' ? 'Hide Form' : 'Add New Procurement';
+        }
+
+        document.getElementById("grain-select").addEventListener("change", updatePrice);
+        document.getElementById("quantity").addEventListener("input", updatePrice);
+
+        function updatePrice() {
+            let grainSelect = document.getElementById("grain-select");
+            let pricePerUnit = grainSelect.options[grainSelect.selectedIndex].getAttribute("data-price");
+            let quantity = document.getElementById("quantity").value;
+            let totalPrice = pricePerUnit * quantity;
+            document.getElementById("total-price").innerText = "₹" + (totalPrice || 0).toFixed(2);
+        }
+
+        function searchDealer() {
+            const dealerId = document.getElementById('dealer-id').value;
+            if (!dealerId) {
+                document.getElementById('dealer-results').innerHTML = '<div class="error">Please enter a dealer ID</div>';
+                return;
+            }
+            
+            fetch(`/employee/get_dealer_info/${dealerId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('dealer-results');
+                    if (data.error) {
+                        resultsDiv.innerHTML = `<div class="error">${data.error}</div>`;
+                    } else {
+                        resultsDiv.innerHTML = `
+                            <div class="dealer-result" onclick="selectDealer(${data.Dealer_ID}, '${data.Name}')">
+                                ${data.Name} (ID: ${data.Dealer_ID})
+                            </div>`;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('dealer-results').innerHTML = '<div class="error">Error searching for dealer</div>';
+                });
+        }
+
+        function selectDealer(id, name) {
+            document.getElementById('selected-dealer-id').value = id;
+            document.getElementById('selected-dealer').innerHTML = `<div class="selected-dealer">Selected: ${name} (ID: ${id})</div>`;
+            document.getElementById('dealer-results').innerHTML = '';
+        }
+    </script>
+{% endblock %}

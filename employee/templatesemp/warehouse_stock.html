@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Warehouse{% endblock %}
+{% block role %}{{role}}{% endblock %}
+{% block content %}
+    <div class="content">
+        <h2>Warehouse Stock Details</h2>
+        <form method="GET" action="{{ url_for('employee.warehouse_stock') }}">
+            <label for="search_id">Search by Inventory ID:</label>
+            <input type="text" id="search_id" name="search_id">
+            <button type="submit">Search</button>
+        </form>
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Inventory ID</th>
+                    <th>Grain Type</th>
+                    <th>Stock</th>
+                    <th>Capacity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for warehouse in warehouses %}
+                    <tr>
+                        <td>{{ warehouse['Inventory_ID'] }}</td>
+                        <td>{{ warehouse['Grain_Name'] }}</td>
+                        <td>{{ warehouse['stock'] }}</td>
+                        <td>{{ warehouse['Capacity'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Warehouse Summary Table -->
+        <h3>Warehouse Summary</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Warehouse ID</th>
+                    <th>Location</th>
+                    <th>Total Stock</th>
+                    <th>Total Capacity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ warehouse_summary.Warehouse_ID }}</td>
+                    <td>{{ warehouse_summary.Location }}</td>
+                    <td>{{ warehouse_summary.Total_Stock }}</td>
+                    <td>{{ warehouse_summary.Total_Capacity }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

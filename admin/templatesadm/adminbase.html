@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('admin.static',filename='styles.css')}}">
+    {% block script %}{% endblock %}
+</head>
+<body>
+    <div class="sidebar">
+        <h3>Dashboard ({% block role %}Guest{% endblock %})</h2>
+        
+        <a href="{{url_for('admin.homepage')}}">Home</a>
+            <a href="{{url_for('admin.users')}}">Manage Users</a>
+            <a href="{{url_for('admin.allProcurements')}}">Procurements</a>
+            <a href="{{url_for('admin.dealerList')}}">Dealers</a>
+            <a href="{{url_for('admin.allwarehouses')}}">Warehouses</a>
+            <a href="{{url_for('admin.allgrievances')}}">Grievances</a>
+            <a href="{{url_for('admin.logout')}}">Logout</a>
+        
+    </div>
+{% block maincontent %}
+{% endblock %}
+</body>
+</html>

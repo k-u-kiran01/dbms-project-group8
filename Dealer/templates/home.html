@@ -1,0 +1,27 @@
+{% extends "dealerbase.html" %}
+{%block title%}Dashboard{%endblock%}
+{% block role %}{{role}}{% endblock %}
+{% block content %}
+<div class="content">
+    <h2>Data Analytics Dashboard</h2>
+    <div class="summary">
+        <div class="card">
+            <h3>your procurements</h3>
+            <p>you have made {{qs1}} procurements</p>
+        </div>
+        <div class="card">
+            <h3>your orders</h3>
+            <p>you have made {{qs2}} orders</p>
+        </div>
+        <div class="card">
+            <h3>your returns</h3>
+            <p>you have made {{qs3}} returns</p>
+        </div>
+        <div class="card">
+            <h3>your pending grievances</h3>
+            <p>you have {{qs4}} pending grievances</p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
