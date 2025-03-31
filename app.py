@@ -4,22 +4,15 @@ from flask_mysqldb import MySQL
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = "lol"
-import configparser
-
-config = configparser.ConfigParser()
-config.read('config.ini')
-
-DATABASE_PASSWORD = config['DATABASE']['password']
 
 # Configure Flask-MySQLdb
 app.config['MYSQL_HOST'] = 'dbmsproject-knkul359-a7bd.f.aivencloud.com'
 app.config['MYSQL_PORT'] = 26045
 app.config['MYSQL_USER'] = 'avnadmin'
-app.config['MYSQL_PASSWORD'] = DATABASE_PASSWORD
+app.config['MYSQL_PASSWORD'] = 'AVNS_grt3wzxXBix3hcUwWOq'
 app.config['MYSQL_DB'] = 'new_schema'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-app.config['MYSQL_SSL_CA'] = '/etc/ssl/certs/ca-certificates.crt'
-  # Update this path to your actual CA certificate path
+app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Update this path to your actual CA certificate path
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # Initialize MySQL
