@@ -163,7 +163,7 @@ def transactions():
         cursor=mysql.connection.cursor(DictCursor)
 
         if search_id:
-            cursor.execute("SELECT Transaction_ID,Amount,Status,Transaction_Date,Procurement_ID FROM transaction1 t INNER JOIN procurement p ON t.Procurement_ID=p.P_ID WHERE p.Dealer_ID=%s AND p.Procurement_ID=%s;",((session['user_id']),search_id,))
+            cursor.execute("SELECT Transaction_ID,Amount,Status,Transaction_Date,Procurement_ID FROM transaction1 t INNER JOIN procurement p ON t.Procurement_ID=p.P_ID WHERE p.Dealer_ID=%s AND t.Procurement_ID=%s;",((session['user_id']),search_id,))
 
         else:
             cursor.execute("SELECT Transaction_ID,Amount,Status,Transaction_Date,Procurement_ID FROM transaction1 t INNER JOIN procurement p ON t.Procurement_ID=p.P_ID WHERE p.Dealer_ID=%s;",(session['user_id'],))
