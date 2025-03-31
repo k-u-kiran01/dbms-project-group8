@@ -31,14 +31,16 @@ def fetch_stock_summary(mysql):
     try:
         cursor = mysql.connection.cursor(DictCursor)
         # Fetch total stock
-        cursor.execute("SELECT COALESCE(SUM(Inventory_Count), 0) AS total_stock FROM warehouse")
-        total_stock = cursor.fetchone()["total_stock"]
+        warehouse=get_manager_warehouse()
+        print(warehouse)
+        cursor.execute("SELECT SUM(Stock) from inventory where Warehouse_ID=%s",(warehouse,))
+        total_stock = cursor.fetchone()
 
         # Fetch total capacity
-        cursor.execute("SELECT COALESCE(SUM(Capacity), 0) AS total_capacity FROM warehouse")
+        cursor.execute("SELECT Capacity AS total_capacity FROM warehouse=%s",(warehouse,))
         total_capacity = cursor.fetchone()["total_capacity"]
 
-        return int(total_stock), int(total_capacity)
+        return int(total_stock['SUM(Stock)']), int(total_capacity)
     except Exception as e:
         print(f"Error fetching stock summary: {e}")
         return 0, 0
