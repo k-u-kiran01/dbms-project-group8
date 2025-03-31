@@ -69,7 +69,7 @@ def addorder(userid,order):
         print(order)
         cursor.execute("INSERT INTO delivery (Dealer_ID, Grain_ID, Delivery_Date, Grain_Quantity,Warehouse_ID) VALUES (%s, %s, CURDATE(), %s,%s)", 
                        (userid,order['grain_id'],order['quantity'],order['warehouse_ID'],))
-        cursor.execute("SELECT Inventory_ID from inventory WHERE Warehouse_ID=%s AND Grain_ID=%s;",(order['grain_id'],order['warehouse_ID']))
+        cursor.execute("SELECT Inventory_ID from inventory WHERE Warehouse_ID=%s AND Grain_ID=%s;",(order['grain_id'],order['Warehouse_ID']))
         inventory_ID=cursor.fetchone()
         cursor.execute("UPDATE inventory SET Stock =Stock -%s WHERE Inventory_ID=%s",(order['quantity'],inventory_ID['Inventory_ID']))
         mysql.connection.commit()
