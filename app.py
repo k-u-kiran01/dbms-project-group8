@@ -18,7 +18,8 @@ app.config['MYSQL_USER'] = 'avnadmin'
 app.config['MYSQL_PASSWORD'] = DATABASE_PASSWORD
 app.config['MYSQL_DB'] = 'new_schema'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Update this path to your actual CA certificate path
+app.config['MYSQL_SSL_CA'] = '/etc/ssl/certs/ca-certificates.crt'
+  # Update this path to your actual CA certificate path
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 # Initialize MySQL
