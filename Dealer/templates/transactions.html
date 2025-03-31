@@ -3,7 +3,7 @@
 {% block role %}{{role}}{%endblock%}
 {% block content %}
 <div class="content">
-    <h2>Transaction hitory</h2>
+    <h2>Transaction history</h2>
     <form method="GET" action="{{url_for('dealer.transactions')}}">
         <label for="search_id">Search by Procurement ID:</label>
         <input type="text" id="search_id" name="search_id">
