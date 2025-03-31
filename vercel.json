@@ -1,0 +1,18 @@
+{
+    "builds": [
+    {
+      "src": "app.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "env": {
+    "LD_LIBRARY_PATH": "/opt/render/project/mysql/lib"
+  },
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "app.py"
+      }
+    ]
+  }
+  
