@@ -37,7 +37,7 @@ def fetch_stock_summary(mysql):
         total_stock = cursor.fetchone()
 
         # Fetch total capacity
-        cursor.execute("SELECT Capacity AS total_capacity FROM warehouse=%s",(warehouse,))
+        cursor.execute("SELECT Capacity AS total_capacity FROM warehouse WHERE Warehouse_ID=%s",(warehouse,))
         total_capacity = cursor.fetchone()["total_capacity"]
 
         return int(total_stock['SUM(Stock)']), int(total_capacity)
