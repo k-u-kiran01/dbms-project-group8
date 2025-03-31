@@ -59,31 +59,34 @@ def newGrievance(userid, description):
 
     return grievance_id
 
-def addorder(userid,order):
+def addorder(userid, order):
     from app import mysql
     cursor = mysql.connection.cursor(DictCursor)
 
     try:
-        # cursor.execute("SELECT Inventory_ID FROM grains WHERE Grain_ID=%s",(order['grain_id'],))
-        # inventory=cursor.fetchone()
-        print(order)
-        cursor.execute("INSERT INTO delivery (Dealer_ID, Grain_ID, Delivery_Date, Grain_Quantity,Warehouse_ID) VALUES (%s, %s, CURDATE(), %s,%s)", 
-                       (userid,order['grain_id'],order['quantity'],order['warehouse_ID'],))
-        cursor.execute("SELECT Inventory_ID from inventory WHERE Warehouse_ID=%s AND Grain_ID=%s;",(order['grain_id'],order['Warehouse_ID']))
-        inventory_ID=cursor.fetchone()
-        cursor.execute("UPDATE inventory SET Stock =Stock -%s WHERE Inventory_ID=%s",(order['quantity'],inventory_ID['Inventory_ID']))
+        # Ensure correct data types
+        order['warehouse_ID'] = int(order['warehouse_ID'])
+        order['quantity'] = int(order['quantity'])
+
+        # Insert into delivery table
+        sql_query = """INSERT INTO delivery 
+            (Dealer_ID, Grain_ID, Delivery_Date, Grain_Quantity, Warehouse_ID) 
+            VALUES (%s, %s, CURDATE(), %s, %s)"""
+        values = (userid, order['grain_id'], order['quantity'], order['warehouse_ID'])
+
+        cursor.execute(sql_query, values)
         mysql.connection.commit()
-        order_id = cursor.lastrowid
+
+        return cursor.lastrowid
 
     except Exception as e:
-        print(f"Error inserting orders: {e}")
+        print(f"Error inserting into delivery: {e}")
         mysql.connection.rollback()
-        order_id= None
+        return None
 
     finally:
         cursor.close()
 
-    return order_id
 def newReturn(userid,delivey_id):
     from app import mysql
     cursor=mysql.connection.cursor(DictCursor)
