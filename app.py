@@ -6,10 +6,10 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = "lol"
 
 #AIVEN DATABSE
-# app.config['MYSQL_HOST'] = 'dbmsproject-knkul359-a7bd.f.aivencloud.com'
-# app.config['MYSQL_PORT'] = 26045
-# app.config['MYSQL_USER'] = 'avnadmin'
-# app.config['MYSQL_PASSWORD'] = 'AVNS_grt3wzxXBix3hcUwWOq'
+# app.config['MYSQL_HOST'] = ''
+# app.config['MYSQL_PORT'] = 
+# app.config['MYSQL_USER'] = ''
+# app.config['MYSQL_PASSWORD'] = ''
 # app.config['MYSQL_DB'] = 'new_schema'
 # app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 # app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Update this path to your actual CA certificate path
