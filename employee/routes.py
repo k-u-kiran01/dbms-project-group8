@@ -354,7 +354,8 @@ def procurement():
         mysql.connection.commit()
         flash("Procurement added successfully!", "success")
         return redirect(url_for("employee.procurement"))
-
+    for grain in grains:
+        grain['Price_per_Unit']=int(grain['Price_per_Unit'])
     return render_template(
         "procurement.html",
         role=session['role'],
