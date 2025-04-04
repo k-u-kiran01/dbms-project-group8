@@ -21,7 +21,7 @@
                         <option value="">Select Grain</option>
                         {% for grain in grains %}
                             <option value="{{ grain.Grain_ID }}" data-price="{{ grain.Price_Per_Unit }}">
-                                {{ grain.Grain_Type }} (₹{{ grain.Price_Per_Unit }}/unit)
+                                {{ grain.Grain_Type }} (₹{{ grain.Price_per_Unit }}/unit)
                             </option>
                         {% endfor %}
                     </select>
