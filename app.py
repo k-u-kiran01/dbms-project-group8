@@ -5,16 +5,24 @@ from flask_mysqldb import MySQL
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = "lol"
 
-# Configure Flask-MySQLdb
-app.config['MYSQL_HOST'] = 'dbmsproject-knkul359-a7bd.f.aivencloud.com'
-app.config['MYSQL_PORT'] = 26045
-app.config['MYSQL_USER'] = 'avnadmin'
-app.config['MYSQL_PASSWORD'] = 'AVNS_grt3wzxXBix3hcUwWOq'
-app.config['MYSQL_DB'] = 'new_schema'
+#AIVEN DATABSE
+# app.config['MYSQL_HOST'] = 'dbmsproject-knkul359-a7bd.f.aivencloud.com'
+# app.config['MYSQL_PORT'] = 26045
+# app.config['MYSQL_USER'] = 'avnadmin'
+# app.config['MYSQL_PASSWORD'] = 'AVNS_grt3wzxXBix3hcUwWOq'
+# app.config['MYSQL_DB'] = 'new_schema'
+# app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+# app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Update this path to your actual CA certificate path
+# app.config['TEMPLATES_AUTO_RELOAD'] = True
+#Google clod database
+app.config['MYSQL_HOST'] = '34.93.24.224'
+app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '1234'
+app.config['MYSQL_DB'] = 'dbms_project'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Update this path to your actual CA certificate path
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-
 # Initialize MySQL
 mysql = MySQL(app)
 
