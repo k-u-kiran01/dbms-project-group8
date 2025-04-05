@@ -222,7 +222,7 @@ def allwarehouses():
                            role=session['role'],
                           inventories=inventory_data, 
                           warehouses=warehouse_data,
-#                           select_id=select_id)  # Pass select_id to the template
+                          select_id=select_id)  # Pass select_id to the template
 # @admin.route('/users',methods=['GET'])
 # def users():
 #     if 'user_id' not in session or (session['role'] != "Admin" and session['role'] !="FCI OFFICIAL"):
