@@ -222,18 +222,37 @@ def allwarehouses():
                            role=session['role'],
                           inventories=inventory_data, 
                           warehouses=warehouse_data,
-                          select_id=select_id)  # Pass select_id to the template
-@admin.route('/users',methods=['GET'])
+#                           select_id=select_id)  # Pass select_id to the template
+# @admin.route('/users',methods=['GET'])
+# def users():
+#     if 'user_id' not in session or (session['role'] != "Admin" and session['role'] !="FCI OFFICIAL"):
+#         redirect(url_for('login'))
+#     from app import mysql
+#     cursor=mysql.connection.cursor(DictCursor)
+#     cursor.execute("SELECT * FROM users WHERE Role <> %s AND Role <> %s",('FCI OFFICIAL','Admin',))
+#     user_data=cursor.fetchall()
+#     #print(user_data)
+#     cursor.close()
+#     return render_template('users.html',role=session['role'],users=user_data)
+@admin.route('/users', methods=['GET'])
 def users():
-    if 'user_id' not in session or (session['role'] != "Admin" and session['role'] !="FCI OFFICIAL"):
-        redirect(url_for('login'))
-    from app import mysql
-    cursor=mysql.connection.cursor(DictCursor)
-    cursor.execute("SELECT * FROM users WHERE Role <> %s AND Role <> %s",('FCI OFFICIAL','Admin',))
-    user_data=cursor.fetchall()
-    #print(user_data)
+    if 'user_id' not in session or (session['role'] != "Admin" and session['role'] != "FCI OFFICIAL"):
+        return redirect(url_for('login'))
+
+    search_id = request.args.get('search_id')
+
+    cursor = mysql.connection.cursor()
+    if search_id:
+        # If searching, get that specific user
+        cursor.execute("SELECT * FROM users WHERE User_ID = %s", [search_id])
+    else:
+        # Otherwise get all non-admin users
+        cursor.execute("SELECT * FROM users WHERE Role <> %s AND Role <> %s", ('FCI OFFICIAL', 'Admin'))
+    
+    user_data = cursor.fetchall()
     cursor.close()
-    return render_template('users.html',role=session['role'],users=user_data)
+
+    return render_template('users.html', role=session['role'], users=user_data)
 
 @admin.route('/removeUser',methods=['POST'])
 def remove_user():
