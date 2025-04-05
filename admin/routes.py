@@ -10,7 +10,7 @@ def getLastMonthProc():
     from app import mysql
     cursor=mysql.connection.cursor()
     cursor.execute("""
-    SELECT count(P_ID) FROM new_schema.procurement
+    SELECT count(P_ID) FROM procurement
     where month(current_date()) - month(Date)=1;
     """)
     proc=cursor.fetchone()
@@ -20,7 +20,7 @@ def activeUsers():
     from app import mysql
     cursor=mysql.connection.cursor()
     cursor.execute("""
-    SELECT count(User_ID) FROM new_schema.users
+    SELECT count(User_ID) FROM users
     where Role = 'Dealer' or Role = 'Manager';
     """)
     users=cursor.fetchone()
@@ -29,7 +29,7 @@ def delLastMonth():
     from app import mysql
     cursor=mysql.connection.cursor()
     cursor.execute("""
-    SELECT count(Delivery_ID) FROM new_schema.delivery
+    SELECT count(Delivery_ID) FROM delivery
 where month(current_date()) - month(Delivery_Date);
     """)
     deliveries=cursor.fetchone()
@@ -38,7 +38,7 @@ def totalpendGrievances():
     from app import mysql
     cursor=mysql.connection.cursor()
     cursor.execute("""
-    SELECT count(Grievance_ID) FROM new_schema.grievance
+    SELECT count(Grievance_ID) FROM grievance
     where  Status = 'Open';
     """)
     grv=cursor.fetchone()
