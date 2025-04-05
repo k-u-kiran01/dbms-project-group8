@@ -236,6 +236,7 @@ def allwarehouses():
 #     return render_template('users.html',role=session['role'],users=user_data)
 @admin.route('/users', methods=['GET'])
 def users():
+    from app import mysql
     if 'user_id' not in session or (session['role'] != "Admin" and session['role'] != "FCI OFFICIAL"):
         return redirect(url_for('login'))
 
