@@ -7,11 +7,12 @@ app.secret_key = "lol"
 
 # ✅ MySQL config pulled from environment (Render injects these)
 app.config['MYSQL_HOST'] = os.environ.get('host')
-app.config['MYSQL_PORT'] = os.environ.get('port')
+app.config['MYSQL_PORT'] = int(os.environ.get('port'))
 app.config['MYSQL_USER'] = os.environ.get('user')
 app.config['MYSQL_PASSWORD'] = os.environ.get('password')
 app.config['MYSQL_DB'] = os.environ.get('schema')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+app.config['MYSQL_UNIX_SOCKET'] = None
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
