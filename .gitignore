@@ -3,3 +3,4 @@ myenv
 vercel.json
 Scripts
 pyvenv.cfg
+.env
