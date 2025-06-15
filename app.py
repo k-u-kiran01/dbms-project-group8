@@ -1,29 +1,22 @@
 from flask import Flask, flash,  request, redirect, url_for, session, render_template
 from flask_mysqldb import MySQL
-
+import os
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.secret_key = "lol"
 
-#AIVEN DATABSE
-# app.config['MYSQL_HOST'] = ''
-# app.config['MYSQL_PORT'] = 
-# app.config['MYSQL_USER'] = ''
-# app.config['MYSQL_PASSWORD'] = ''
-# app.config['MYSQL_DB'] = 'new_schema'
-# app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-# app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Update this path to your actual CA certificate path
-# app.config['TEMPLATES_AUTO_RELOAD'] = True
-#Google clod database
-app.config['MYSQL_HOST'] = '34.93.24.224'
-app.config['MYSQL_PORT'] = 3306
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '1234'
-app.config['MYSQL_DB'] = 'dbms_project'
+# ✅ MySQL config pulled from environment (Render injects these)
+app.config['MYSQL_HOST'] = os.environ.get('host')
+app.config['MYSQL_PORT'] = int(os.environ.get('port'))
+app.config['MYSQL_USER'] = os.environ.get('user')
+app.config['MYSQL_PASSWORD'] = os.environ.get('password')
+app.config['MYSQL_DB'] = os.environ.get('schema')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-app.config['MYSQL_SSL_CA'] = '/path/to/ca.pem'  # Update this path to your actual CA certificate path
+
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-# Initialize MySQL
+
+mysql = MySQL(app)
+
 mysql = MySQL(app)
 
 from Dealer.routes import dealer
