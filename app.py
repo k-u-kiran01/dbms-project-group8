@@ -1,22 +1,21 @@
 from flask import Flask, flash,  request, redirect, url_for, session, render_template
-from flask_mysqldb import MySQL
 import os
+from flask_mysqldb import MySQL
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
-app.secret_key = "lol"
+app.secret_key = os.environ.get('secret_key', 'fallbacksecret')
 
-# ✅ MySQL config pulled from environment (Render injects these)
 app.config['MYSQL_HOST'] = os.environ.get('host')
 app.config['MYSQL_PORT'] = int(os.environ.get('port'))
 app.config['MYSQL_USER'] = os.environ.get('user')
 app.config['MYSQL_PASSWORD'] = os.environ.get('password')
 app.config['MYSQL_DB'] = os.environ.get('schema')
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
 app.config['MYSQL_UNIX_SOCKET'] = None
 
-app.config['TEMPLATES_AUTO_RELOAD'] = True
-
-mysql = MySQL(app)
+app.config['MYSQL_SSL_VERIFY_CERT'] = False 
+app.config['MYSQL_SSL_CA'] = None  
 
 mysql = MySQL(app)
 
